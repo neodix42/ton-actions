@@ -1,26 +1,19 @@
-name: Ubuntu TON build (shared, x86-64)
+name: TON Ubuntu 22.04-arm64 (master, shared)
 
 on: [workflow_dispatch]
 
 jobs:
   build:
-    strategy:
-      fail-fast: false
-      matrix:
-        os: [ubuntu-22.04-arm64, ubuntu-22.04, ubuntu-24.04]
-    runs-on: ${{ matrix.os }}
+    runs-on: [self-hosted, ubuntu-22.04-arm64]
 
     steps:
-    - name: Check out repository
-      uses: actions/checkout@v3
-      with:      
-        submodules: 'recursive'
-
-    - name: Install system libraries
+    - name: Clone TON
       run: |
         git clone --recursive https://github.com/ton-blockchain/ton.git ton
+        git checkout master
+        git pull
 
-    - if: matrix.os != 'ubuntu-24.04'
+    - name: Install Clang 16
       run: |
         wget https://apt.llvm.org/llvm.sh
         chmod +x llvm.sh
@@ -36,5 +29,5 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@master
       with:
-        name: ton-binaries-${{ matrix.os }}
+        name: ton-binaries-ubuntu-22.04-arm64
         path: ton/artifacts
