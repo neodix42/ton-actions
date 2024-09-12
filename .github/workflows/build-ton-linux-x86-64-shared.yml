@@ -5,7 +5,9 @@ on: [workflow_dispatch]
 jobs:
   build:
     runs-on: [self-hosted, ubuntu-22.04-arm64]
-
+    defaults:
+      run:
+        working-directory: ./${{ github.run_id }}-${{ github.run_attempt }}
     steps:
     - name: Clone TON
       run: |
