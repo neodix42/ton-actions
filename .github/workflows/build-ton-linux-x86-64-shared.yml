@@ -12,21 +12,20 @@ jobs:
       with:
         path: ./${{ github.run_id }}-${{ github.run_attempt }}
 
-    - name: Clone TON
-      run: |
-        git clone --recursive https://github.com/ton-blockchain/ton.git ton
-        git checkout master
-        git pull
-
     - name: Install Clang 16
       run: |
         wget https://apt.llvm.org/llvm.sh
         chmod +x llvm.sh
         sudo ./llvm.sh 16 all
 
+    - name: Clone TON
+      run: |
+        git clone --recursive https://github.com/ton-blockchain/ton.git .
+        git checkout master
+        git pull
+
     - name: Build TON
       run: |
-        cd ton
         cp assembly/native/build-ubuntu-shared.sh .
         chmod +x build-ubuntu-shared.sh
         ./build-ubuntu-shared.sh -t -a
@@ -35,4 +34,4 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: ton-binaries-ubuntu-22.04-arm64
-        path: ton/artifacts
+        path: artifacts
