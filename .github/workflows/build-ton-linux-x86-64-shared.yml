@@ -20,12 +20,12 @@ jobs:
 
     - name: Clone TON
       run: |
-        git clone --recursive https://github.com/ton-blockchain/ton.git .
-        git checkout master
-        git pull
+        git clone --recursive https://github.com/ton-blockchain/ton.git ton
+        cd ton; git checkout master; git pull
 
     - name: Build TON
       run: |
+        cd ton
         cp assembly/native/build-ubuntu-shared.sh .
         chmod +x build-ubuntu-shared.sh
         ./build-ubuntu-shared.sh -t -a
@@ -34,4 +34,4 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: ton-binaries-ubuntu-22.04-arm64
-        path: artifacts
+        path: ton/artifacts
