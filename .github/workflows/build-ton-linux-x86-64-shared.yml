@@ -5,13 +5,12 @@ on: [workflow_dispatch]
 jobs:
   build:
     runs-on: [self-hosted, ubuntu-22.04-arm64]
-    defaults:
-      run:
-        working-directory: ./${{ github.run_id }}-${{ github.run_attempt }}
 
     steps:
     - name: Check out repository
       uses: actions/checkout@v3
+      with:
+        path: ./${{ github.run_id }}-${{ github.run_attempt }}
 
     - name: Clone TON
       run: |
