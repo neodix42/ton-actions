@@ -1,0 +1,116 @@
+name: Release all (nix)
+
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'TON branch name'
+        required: true
+        default: 'master'
+
+permissions: write-all
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Check out current repository
+        uses: actions/checkout@v3        
+          
+  ton-linux-arm64-nix:
+    uses: ./.github/workflows/ton-linux-arm64-nix.yml
+    secrets: inherit
+    with:
+      branch: ${{ inputs.branch }}
+
+  ton-linux-x86-64-nix:
+    uses: ./.github/workflows/ton-linux-x86-64-nix.yml
+    secrets: inherit
+    with:
+      branch: ${{ inputs.branch }}
+
+  ton-macos-arm64-nix:
+    uses: ./.github/workflows/ton-macos-arm64-nix.yml
+    secrets: inherit
+    with:
+      branch: ${{ inputs.branch }}
+
+  ton-macos-x86-64-nix:
+    uses: ./.github/workflows/ton-macos-x86-64-nix.yml
+    secrets: inherit
+    with:
+      branch: ${{ inputs.branch }}
+
+  ton-windows-x86-64:
+    uses: ./.github/workflows/ton-windows-x86-64.yml
+    secrets: inherit
+    with:
+      branch: ${{ inputs.branch }}
+
+  create-release:
+    needs: build
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out current repository
+        uses: actions/checkout@v3
+
+      - name: Download Linux x86-64 artifacts
+        uses: actions/download-artifact@v4
+        with:
+          workflow: ton-linux-x86-64-nix.yml
+          path: artifacts
+
+      - name: Download Linux arm64 artifacts
+        uses: actions/download-artifact@v4
+        with:
+          workflow: ton-linux-arm64-nix.yml
+          path: artifacts
+
+      # create release
+      - name: Get next tag
+        id: tag
+        run: |
+          git fetch --all --tags
+          git tag -l
+          NEW_TAG=v$(date +'%Y.%m')
+          FOUND=$(git tag -l | grep $NEW_TAG | wc -l)
+          if [ $FOUND -eq 0 ]; then
+            echo "TAG=$NEW_TAG" >> $GITHUB_OUTPUT
+          else
+            echo "TAG=$NEW_TAG-$FOUND" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Get registration token
+        id: getRegToken
+        run: |
+          curl -X POST -H \"Accept: application/vnd.github+json\"  -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/ton-blockchain/ton/actions/runners/registration-token
+
+      - name: Create release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ steps.tag.outputs.TAG }}
+          release_name: TON ${{ steps.tag.outputs.TAG }}
+          draft: false
+          prerelease: false
+
+
+      # upload artifacts to release
+      - name: Upload Linux x86-64 artifacts
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/ton-portable-22.04-x86-64.zip
+          asset_name: ton-portable-22.04-x86-64.zip
+          tag: ${{ steps.tag.outputs.TAG }}
+
+      - name: Upload Linux arm64 artifacts
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/ton-portable-22.04-arm64.zip
+          asset_name: ton-portable-22.04-arm64.zip
+          tag: ${{ steps.tag.outputs.TAG }}
