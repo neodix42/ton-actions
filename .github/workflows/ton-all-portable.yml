@@ -1,6 +1,12 @@
 name: Run all (master,nix)
 
-on: [workflow_dispatch,workflow_call]
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch name'
+        required: true
+        default: 'master'
 
 permissions: write-all
 

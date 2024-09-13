@@ -1,6 +1,13 @@
 name: Win-2019-x86-64 (master,nix)
 
-on: [workflow_dispatch,workflow_call]
+on:
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: 'Branch name'
+        required: true
+        default: 'master'
+  workflow_call:
 
 defaults:
   run:
@@ -24,7 +31,7 @@ jobs:
         run: |
           git clone --recursive https://github.com/ton-blockchain/ton.git ton
           cd ton
-          git checkout master
+          git checkout ${{ github.event.inputs.branch }}
           git pull
 
       - name: Build TON
