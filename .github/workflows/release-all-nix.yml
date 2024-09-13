@@ -82,3 +82,27 @@ jobs:
           file: artifacts/ton-portable-22.04-arm64.zip
           asset_name: ton-portable-22.04-arm64.zip
           tag: ${{ steps.tag.outputs.TAG }}
+
+      - name: Upload MacOS x86-64 artifacts
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/ton-portable-mac12-x86-64.zip
+          asset_name: ton-portable-mac12-x86-64.zip
+          tag: ${{ steps.tag.outputs.TAG }}
+
+      - name: Upload MacOS x86-64 artifacts
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/ton-portable-mac12-x86-64.zip
+          asset_name: ton-portable-mac12-x86-64.zip
+          tag: ${{ steps.tag.outputs.TAG }}
+
+      - name: Upload Windows x86-64 artifacts
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: artifacts/ton-portable-win-2019-x86-64.zip
+          asset_name: ton-portable-win-2019-x86-64.zip
+          tag: ${{ steps.tag.outputs.TAG }}
