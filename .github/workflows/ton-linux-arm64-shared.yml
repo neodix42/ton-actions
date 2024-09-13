@@ -38,7 +38,7 @@ jobs:
       working-directory: ${{ env.WORK_DIR }}
       run: |
         git clone --recursive https://github.com/ton-blockchain/ton.git ton
-        cd ton; git checkout master; git pull
+        cd ton; git checkout ${{ inputs.branch }}; git pull
 
     - name: Build TON
       working-directory: ${{ env.WORK_DIR }}
