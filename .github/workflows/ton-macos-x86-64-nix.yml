@@ -1,0 +1,44 @@
+name: Mac-12-x86-64 (master,nix)
+
+on: [workflow_dispatch,workflow_call]
+
+jobs:
+  build:
+    runs-on: macos-12
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        submodules: 'recursive'
+
+    - uses: cachix/install-nix-action@v23
+      with:
+        extra_nix_config: |
+          access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
+
+    - name: Clone TON
+      run: |
+        git clone --recursive https://github.com/ton-blockchain/ton.git ton
+        cd ton; git checkout master; git pull
+
+    - name: Build TON
+      run: |
+        cd ton
+        cp assembly/nix/build-macos-nix.sh .
+        chmod +x build-macos-nix.sh
+        ./build-macos-nix.sh -t
+
+    - name: Simple binaries test
+      run: |
+        sudo mv /nix/store /nix/store2
+        cd ton
+        artifacts/validator-engine -V
+        artifacts/lite-client -V
+        artifacts/fift -V
+        artifacts/func -V
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@master
+      with:
+        name: ton-portable-mac12-x86-64
+        path: ton/artifacts

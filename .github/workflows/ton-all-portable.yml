@@ -1,0 +1,29 @@
+name: Create all packages (master,nix)
+
+on: [workflow_dispatch,workflow_call]
+
+permissions: write-all
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+  ton-linux-arm64-nix:
+    uses: ./.github/workflows/ton-linux-arm64-nix.yml
+    secrets: inherit
+
+  ton-linux-x86-64-nix:
+    uses: ./.github/workflows/ton-linux-x86-64-nix.yml
+    secrets: inherit
+
+  ton-macos-arm64-nix:
+    uses: ./.github/workflows/ton-macos-arm64-nix.yml
+    secrets: inherit
+
+  ton-macos-x86-64-nix:
+    uses: ./.github/workflows/ton-macos-x86-64-nix.yml
+    secrets: inherit
+
+  ton-windows-x86-64:
+    uses: ./.github/workflows/ton-windows-x86-64.yml
+    secrets: inherit

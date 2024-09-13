@@ -1,0 +1,40 @@
+name: Win-2019-x86-64 (master,nix)
+
+on: [workflow_dispatch,workflow_call]
+
+defaults:
+  run:
+    shell: cmd
+
+jobs:
+  build:
+
+    runs-on: windows-2019
+
+    steps:
+      - name: Get Current OS version
+        run: |
+          systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
+
+      - name: Check out current repository
+        uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+
+      - name: Clone TON
+        run: |
+          git clone --recursive https://github.com/ton-blockchain/ton.git ton
+          cd ton; git checkout master; git pull
+
+      - name: Build TON
+        run: |
+          cd ton
+          copy assembly\native\build-windows-github-2019.bat .
+          copy assembly\native\build-windows-2019.bat .
+          build-windows-github-2019.bat Enterprise
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@master
+        with:
+          name: ton-portable-win-2019-x86-64
+          path: ton/artifacts

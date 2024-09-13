@@ -1,12 +1,13 @@
-name: TON Ubuntu 22.04-arm64 (master, shared)
+name: U-22.04-arm64 (master,shared)
 
-on: [workflow_dispatch]
+on: [workflow_dispatch,workflow_call]
 
 jobs:
   build:
     runs-on: [self-hosted, ubuntu-22.04-arm64]
     env:
       WORK_DIR: ${{ github.run_id }}-${{ github.run_attempt }}
+
     steps:
     - name: Check out repository
       uses: actions/checkout@v3
@@ -37,5 +38,5 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@master
       with:
-        name: ton-binaries-ubuntu-22.04-arm64
+        name: ton-shared-22.04-arm64
         path: ${{ env.WORK_DIR }}/ton/artifacts
