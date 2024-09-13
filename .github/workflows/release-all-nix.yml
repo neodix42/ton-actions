@@ -24,18 +24,10 @@ jobs:
       - name: Check out current repository
         uses: actions/checkout@v3
 
-      - name: Download Linux x86-64 artifacts
+      - name: Download all artifacts
         uses: dawidd6/action-download-artifact@v2
         with:
-          workflow: ton-linux-x86-64-nix.yml
-          path: artifacts
-          workflow_conclusion: success
-          skip_unpack: true
-
-      - name: Download Linux arm64 artifacts
-        uses: dawidd6/action-download-artifact@v2
-        with:
-          workflow: ton-linux-arm64-nix.yml
+          workflow: build-all-nix.yml
           path: artifacts
           workflow_conclusion: success
           skip_unpack: true
@@ -44,6 +36,9 @@ jobs:
       - name: Get next tag
         id: tag
         run: |
+          ls -lart
+          echo ---------------------
+          ls -lart artifacts
           git fetch --all --tags
           git tag -l
           NEW_TAG=v$(date +'%Y.%m')
