@@ -1,4 +1,4 @@
-name: Win-2019-x86-64 (master,nix)
+name: Win-2019-x86-64 (nix)
 
 on:
   workflow_dispatch:
@@ -8,6 +8,12 @@ on:
         required: true
         default: 'master'
   workflow_call:
+    inputs:
+      branch:
+        description: 'TON branch name'
+        required: true
+        default: 'master'
+        type: string
 
 defaults:
   run:
