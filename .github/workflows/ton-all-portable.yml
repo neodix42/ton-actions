@@ -9,10 +9,6 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - name: Get Current OS version
-        run: |
-          systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
-
       - name: Check out current repository
         uses: actions/checkout@v3        
           
