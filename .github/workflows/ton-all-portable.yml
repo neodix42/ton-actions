@@ -1,6 +1,6 @@
-name: Create all packages (master,nix)
+name: Run all (master,nix)
 
-on: [push,workflow_dispatch,workflow_call]
+on: [workflow_dispatch,workflow_call]
 
 permissions: write-all
 
@@ -8,6 +8,14 @@ jobs:
   build:
     runs-on: ubuntu-22.04
 
+    steps:
+      - name: Get Current OS version
+        run: |
+          systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
+
+      - name: Check out current repository
+        uses: actions/checkout@v3        
+          
   ton-linux-arm64-nix:
     uses: ./.github/workflows/ton-linux-arm64-nix.yml
     secrets: inherit
