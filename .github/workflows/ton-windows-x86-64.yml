@@ -23,7 +23,9 @@ jobs:
       - name: Clone TON
         run: |
           git clone --recursive https://github.com/ton-blockchain/ton.git ton
-          cd ton; git checkout master; git pull
+          cd ton
+          git checkout master
+          git pull
 
       - name: Build TON
         run: |

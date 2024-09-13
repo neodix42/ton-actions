@@ -28,6 +28,7 @@ jobs:
     - name: Build TON
       working-directory: ${{ env.WORK_DIR }}
       run: |
+        cd ton
         cp assembly/nix/build-linux-arm64-nix.sh .
         chmod +x build-linux-arm64-nix.sh
         ./build-linux-arm64-nix.sh
