@@ -1,10 +1,10 @@
 name: U-22.04-arm64 (master,nix)
 
-on: [push,workflow_dispatch,workflow_call]
+on: [push,push,workflow_dispatch,workflow_call]
 
 jobs:
   build:
-    runs-on: [self-hosted, ubuntu-22.04-arm64]
+    runs-on: [push,self-hosted, ubuntu-22.04-arm64]
     env:
       WORK_DIR: ${{ github.run_id }}-${{ github.run_attempt }}
 

@@ -1,6 +1,6 @@
 name: Mac-14-arm64 (master,nix)
 
-on: [workflow_dispatch,workflow_call]
+on: [push,workflow_dispatch,workflow_call]
 
 jobs:
   build:

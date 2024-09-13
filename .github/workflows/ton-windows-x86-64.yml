@@ -1,6 +1,6 @@
 name: Win-2019-x86-64 (master,nix)
 
-on: [workflow_dispatch,workflow_call]
+on: [push,workflow_dispatch,workflow_call]
 
 defaults:
   run:

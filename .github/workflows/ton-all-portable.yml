@@ -1,6 +1,6 @@
 name: Create all packages (master,nix)
 
-on: [workflow_dispatch,workflow_call]
+on: [push,workflow_dispatch,workflow_call]
 
 permissions: write-all
 
