@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
     inputs:
       branch:
-        description: 'Branch name'
+        description: 'TON branch name'
         required: true
         default: 'master'
 
@@ -37,3 +37,5 @@ jobs:
   ton-windows-x86-64:
     uses: ./.github/workflows/ton-windows-x86-64.yml
     secrets: inherit
+    with:
+      branch: ${{ inputs.branch }}
