@@ -16,13 +16,13 @@ jobs:
 
     steps:
       - name: Check out current repository
-        uses: actions/checkout@v3        
+        uses: actions/checkout@v4        
 
   create-release:
     runs-on: ubuntu-22.04
     steps:
       - name: Check out current repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Download all artifacts
         uses: dawidd6/action-download-artifact@v2
@@ -86,7 +86,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/ton-linux-x86-64-${{ inputs.branch }}.zip
+          file: artifacts/ton-linux-x86-64-${{ inputs.branch }}
           asset_name: ton-linux-x86-64.zip
           tag: ${{ steps.tag.outputs.TAG }}
 
@@ -94,7 +94,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/ton-linux-arm64-${{ inputs.branch }}.zip
+          file: artifacts/ton-linux-arm64-${{ inputs.branch }}
           asset_name: ton-linux-arm64.zip
           tag: ${{ steps.tag.outputs.TAG }}
 
@@ -102,7 +102,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/ton-mac-x86-64-${{ inputs.branch }}.zip
+          file: artifacts/ton-mac-x86-64-${{ inputs.branch }}
           asset_name: ton-mac-x86-64.zip
           tag: ${{ steps.tag.outputs.TAG }}
 
@@ -110,7 +110,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/ton-mac-arm64-${{ inputs.branch }}.zip
+          file: artifacts/ton-mac-arm64-${{ inputs.branch }}
           asset_name: ton-mac-arm64.zip
           tag: ${{ steps.tag.outputs.TAG }}
 
@@ -118,6 +118,6 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/ton-win-x86-64-${{ inputs.branch }}.zip
+          file: artifacts/ton-win-x86-64-${{ inputs.branch }}
           asset_name: ton-win-x86-64.zip
           tag: ${{ steps.tag.outputs.TAG }}
