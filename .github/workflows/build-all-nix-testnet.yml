@@ -1,4 +1,4 @@
-name: Build all (nix,master,release)
+name: Build all (nix,testnet,pre-release)
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
       branch:
         description: 'TON branch name'
         required: true
-        default: 'master'
+        default: 'testnet'
 
 permissions: write-all
 
