@@ -50,5 +50,5 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@master
         with:
-          name: ton-portable-win-2019-x86-64
+          name: ton-win-x86-64-${{ inputs.branch }}
           path: ton/artifacts

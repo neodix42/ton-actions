@@ -1,4 +1,4 @@
-name: Release all (nix)
+name: Pre-Release all (nix, testnet)
 
 on:
   workflow_dispatch:
@@ -6,7 +6,7 @@ on:
       branch:
         description: 'TON branch name'
         required: true
-        default: 'master'
+        default: 'testnet'
 
 permissions: write-all
 
@@ -27,7 +27,7 @@ jobs:
       - name: Download all artifacts
         uses: dawidd6/action-download-artifact@v2
         with:
-          workflow: build-all-nix.yml
+          workflow: build-all-nix-testnet.yml
           path: artifacts
           workflow_conclusion: success
           skip_unpack: true
@@ -44,10 +44,11 @@ jobs:
           NEW_TAG=v$(date +'%Y.%m')
           FOUND=$(git tag -l | grep $NEW_TAG | wc -l)
           if [ $FOUND -eq 0 ]; then
-            echo "TAG=$NEW_TAG" >> $GITHUB_OUTPUT
+            TAG=$NEW_TAG
           else
-            echo "TAG=$NEW_TAG-$FOUND" >> $GITHUB_OUTPUT
+            TAG=$NEW_TAG-$FOUND
           fi
+          echo "TAG=$NEW_TAG-$FOUND-pre" >> $GITHUB_OUTPUT
 
       - name: Get registration token
         id: getRegToken
@@ -57,7 +58,7 @@ jobs:
       - uses: sgpublic/delete-release-action@v1.1
         with:
           # repo: '<owner>/<repoName>' # you can input a another repo here, defaults to current repo
-          release-drop: true
+          release-drop: false
           release-keep-count: -1
           release-drop-tag: true
           pre-release-drop: true
@@ -68,8 +69,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create release
-        id: create_release
+      - name: Create pre-release
+        id: create_pre_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
@@ -77,7 +78,7 @@ jobs:
           tag_name: ${{ steps.tag.outputs.TAG }}
           release_name: TON ${{ steps.tag.outputs.TAG }}
           draft: false
-          prerelease: false
+          prerelease: true
 
 
       # upload artifacts to release
@@ -85,38 +86,38 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/ton-portable-22.04-x86-64.zip
-          asset_name: ton-portable-22.04-x86-64.zip
+          file: artifacts/ton-linux-x86-64-${{ inputs.branch }}.zip
+          asset_name: ton-linux-x86-64.zip
           tag: ${{ steps.tag.outputs.TAG }}
 
       - name: Upload Linux arm64 artifacts
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/ton-portable-22.04-arm64.zip
-          asset_name: ton-portable-22.04-arm64.zip
+          file: artifacts/ton-linux-arm64-${{ inputs.branch }}.zip
+          asset_name: ton-linux-arm64.zip
           tag: ${{ steps.tag.outputs.TAG }}
 
       - name: Upload MacOS x86-64 artifacts
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/ton-portable-mac12-x86-64.zip
-          asset_name: ton-portable-mac12-x86-64.zip
+          file: artifacts/ton-mac-x86-64-${{ inputs.branch }}.zip
+          asset_name: ton-mac-x86-64.zip
           tag: ${{ steps.tag.outputs.TAG }}
 
       - name: Upload MacOS arm64 artifacts
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/ton-portable-mac14-arm64.zip
-          asset_name: ton-portable-mac14-arm64.zip
+          file: artifacts/ton-mac-arm64-${{ inputs.branch }}.zip
+          asset_name: ton-mac-arm64.zip
           tag: ${{ steps.tag.outputs.TAG }}
 
       - name: Upload Windows x86-64 artifacts
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/ton-portable-win-2019-x86-64.zip
-          asset_name: ton-portable-win-2019-x86-64.zip
+          file: artifacts/ton-win-x86-64-${{ inputs.branch }}.zip
+          asset_name: ton-win-x86-64.zip
           tag: ${{ steps.tag.outputs.TAG }}

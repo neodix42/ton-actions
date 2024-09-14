@@ -53,5 +53,5 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@master
       with:
-        name: ton-portable-mac14-arm64
+        name: ton-mac-arm64-${{ inputs.branch }}
         path: ton/artifacts

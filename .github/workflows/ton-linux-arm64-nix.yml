@@ -49,5 +49,5 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@master
       with:
-        name: ton-portable-22.04-arm64
+        name: ton-linux-arm64-${{ inputs.branch }}
         path: ${{ env.WORK_DIR }}/ton/artifacts
