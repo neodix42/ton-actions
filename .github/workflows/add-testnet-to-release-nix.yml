@@ -36,13 +36,10 @@ jobs:
       - name: Get next tag
         id: tag
         run: |
-          ls -lart
-          echo ---------------------
-          ls -lart artifacts
           git fetch --all --tags
           git tag -l
           TAG=v$(date +'%Y.%m')          
-          echo "TAG=$NEW_TAG-$FOUND-pre" >> $GITHUB_OUTPUT
+          echo "TAG=$TAG" >> $GITHUB_OUTPUT
 
       - name: Get registration token
         id: getRegToken
@@ -64,16 +61,16 @@ jobs:
 #        env:
 #          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Create pre-release
-        id: create_pre_release
-        uses: actions/create-release@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ steps.tag.outputs.TAG }}
-          release_name: TON ${{ steps.tag.outputs.TAG }}
-          draft: false
-          prerelease: true
+#      - name: Create pre-release
+#        id: create_pre_release
+#        uses: actions/create-release@v1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        with:
+#          tag_name: ${{ steps.tag.outputs.TAG }}
+#          release_name: TON ${{ steps.tag.outputs.TAG }}
+#          draft: false
+#          prerelease: true
 
 
       # upload artifacts to release
