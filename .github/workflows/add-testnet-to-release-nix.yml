@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download all artifacts
-        uses: dawidd6/action-download-artifact@v2
+        uses: dawidd6/action-download-artifact@v3
         with:
           workflow: build-all-nix-testnet.yml
           path: artifacts

@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Download all artifacts
-        uses: dawidd6/action-download-artifact@v2
+        uses: dawidd6/action-download-artifact@v3
         with:
           workflow: build-all-nix-master.yml
           path: artifacts
@@ -54,19 +54,19 @@ jobs:
         run: |
           curl -X POST -H \"Accept: application/vnd.github+json\"  -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/ton-blockchain/ton/actions/runners/registration-token
 
-      - uses: sgpublic/delete-release-action@v1.1
-        with:
-          # repo: '<owner>/<repoName>' # you can input a another repo here, defaults to current repo
-          release-drop: true
-          release-keep-count: -1
-          release-drop-tag: true
-          pre-release-drop: true
-          pre-release-keep-count: -1
-          pre-release-drop-tag: true
-          draft-drop: true
-          draft-drop-count: -1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#      - uses: sgpublic/delete-release-action@v1.1
+#        with:
+#          # repo: '<owner>/<repoName>' # you can input a another repo here, defaults to current repo
+#          release-drop: true
+#          release-keep-count: -1
+#          release-drop-tag: true
+#          pre-release-drop: true
+#          pre-release-keep-count: -1
+#          pre-release-drop-tag: true
+#          draft-drop: true
+#          draft-drop-count: -1
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create release
         id: create_release
@@ -86,7 +86,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: artifacts/ton-linux-x86-64-${{ inputs.branch }}.zip
-          asset_name: ton-linux-x86-64.zip
+          asset_name: ton-linux-x86-64-${{ inputs.branch }}.zip
           tag: ${{ steps.tag.outputs.TAG }}
 
       - name: Upload Linux arm64 artifacts
@@ -94,7 +94,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: artifacts/ton-linux-arm64-${{ inputs.branch }}.zip
-          asset_name: ton-linux-arm64.zip
+          asset_name: ton-linux-arm64-${{ inputs.branch }}.zip
           tag: ${{ steps.tag.outputs.TAG }}
 
       - name: Upload MacOS x86-64 artifacts
@@ -102,7 +102,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: artifacts/ton-mac-x86-64-${{ inputs.branch }}.zip
-          asset_name: ton-mac-x86-64.zip
+          asset_name: ton-mac-x86-64-${{ inputs.branch }}.zip
           tag: ${{ steps.tag.outputs.TAG }}
 
       - name: Upload MacOS arm64 artifacts
@@ -110,7 +110,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: artifacts/ton-mac-arm64-${{ inputs.branch }}.zip
-          asset_name: ton-mac-arm64.zip
+          asset_name: ton-mac-arm64-${{ inputs.branch }}.zip
           tag: ${{ steps.tag.outputs.TAG }}
 
       - name: Upload Windows x86-64 artifacts
@@ -118,5 +118,5 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: artifacts/ton-win-x86-64-${{ inputs.branch }}.zip
-          asset_name: ton-win-x86-64.zip
+          asset_name: ton-win-x86-64-${{ inputs.branch }}.zip
           tag: ${{ steps.tag.outputs.TAG }}
