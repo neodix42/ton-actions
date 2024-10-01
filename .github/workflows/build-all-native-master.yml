@@ -27,28 +27,28 @@ jobs:
 
   ton-linux-arm64-native:
     needs: [build]
-    uses: ./.github/workflows/ton-linux-arm64-portable.yml
+    uses: ./.github/workflows/ton-linux-arm64-native.yml
     secrets: inherit
     with:
       branch: ${{ inputs.branch }}
 
   ton-linux-x86-64-native:
     needs: [build]
-    uses: ./.github/workflows/ton-linux-x86-64-portable.yml
+    uses: ./.github/workflows/ton-linux-x86-64-native.yml
     secrets: inherit
     with:
       branch: ${{ inputs.branch }}
 
   ton-macos-arm64-native:
     needs: [build]
-    uses: ./.github/workflows/ton-macos-arm64-portable.yml
+    uses: ./.github/workflows/ton-macos-arm64-native.yml
     secrets: inherit
     with:
       branch: ${{ inputs.branch }}
 
   ton-macos-x86-64-native:
     needs: [build]
-    uses: ./.github/workflows/ton-macos-x86-64-portable.yml
+    uses: ./.github/workflows/ton-macos-x86-64-native.yml
     secrets: inherit
     with:
       branch: ${{ inputs.branch }}
