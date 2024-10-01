@@ -5,10 +5,6 @@ on:
     - cron: "*/10 * * * *"
   workflow_dispatch:
 
-concurrency:
-  group: ${{ github.workflow }}
-  cancel-in-progress: true
-
 permissions: write-all
 
 jobs:
@@ -23,13 +19,15 @@ jobs:
         id: check
         run: |
           RES=$(curl -s https://api.github.com/repos/ton-blockchain/ton/commits/master | jq -r "((now - (.commit.author.date | fromdateiso8601) )  / (60*60*48) | trunc)")
-          echo $RES
-          echo "RES=$RES" >> $GITHUB_OUTPUT
+          echo $RES          
           exit $RES
 
   ton-all-shared-master:
     if: always() && (needs.build.result == 'success')
     needs: [build]
+    concurrency:
+      group: ${{ github.workflow }}
+      cancel-in-progress: true
     uses: ./.github/workflows/build-all-shared-master.yml
     with:
       branch: master
