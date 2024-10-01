@@ -30,6 +30,6 @@ jobs:
   ton-all-shared-master:
     needs: [build]
     uses: ./.github/workflows/build-all-shared-master.yml
-    if: ${{ env.RES }} == 0
+    if: ${{ vars.RES }} == 0
     with:
       branch: master
