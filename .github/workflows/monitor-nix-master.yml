@@ -1,0 +1,34 @@
+name: Monitor (nix,master)
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions: write-all
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Check out current repository
+        uses: actions/checkout@v4
+
+      - name: Check if there was an update
+        run: |
+          RESULT=$(curl -s https://api.github.com/repos/ton-blockchain/ton/commits/master | jq -r "((now - (.commit.author.date | fromdateiso8601) )  / (60*30) | trunc)")
+          echo $RESULT          
+          if [ $RESULT -ne 0 ]; then
+            exit 1
+          fi
+
+  ton-all-shared-master:
+    if: always() && (needs.build.result == 'success')
+    needs: [build]
+    concurrency:
+      group: ${{ github.workflow }}
+      cancel-in-progress: true
+    uses: ./.github/workflows/build-all-nix-master.yml
+    with:
+      branch: master

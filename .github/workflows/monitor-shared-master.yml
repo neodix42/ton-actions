@@ -2,7 +2,7 @@ name: Monitor (shared,master)
 
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: "*/30 * * * *"
   workflow_dispatch:
 
 permissions: write-all
@@ -17,9 +17,11 @@ jobs:
 
       - name: Check if there was an update
         run: |
-          RESULT=$(curl -s https://api.github.com/repos/ton-blockchain/ton/commits/master | jq -r "((now - (.commit.author.date | fromdateiso8601) )  / (60*15) | trunc)")
-          echo $RESULT          
-          exit $RESULT
+          RESULT=$(curl -s https://api.github.com/repos/ton-blockchain/ton/commits/master | jq -r "((now - (.commit.author.date | fromdateiso8601) )  / (60*60*24) | trunc)")
+          echo $RESULT
+          if [ $RESULT -ne 0 ]; then
+            exit 1
+          fi
 
   ton-all-shared-master:
     if: always() && (needs.build.result == 'success')
