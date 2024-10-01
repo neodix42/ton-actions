@@ -23,7 +23,7 @@ jobs:
           echo $RESULT
           echo "res=$RESULT" >> $GITHUB_OUTPUT
 
-  ton-all-shared-master:
+  ton-all-nix-master:
     if: needs.build.outputs.res == 0
     needs: [build]
     concurrency:
