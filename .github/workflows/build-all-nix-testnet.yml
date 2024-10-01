@@ -7,6 +7,13 @@ on:
         description: 'TON branch name'
         required: true
         default: 'testnet'
+  workflow_call:
+    inputs:
+      branch:
+        description: 'TON branch name'
+        required: true
+        default: 'master'
+        type: string
 
 concurrency:
   group: ${{ github.workflow }}

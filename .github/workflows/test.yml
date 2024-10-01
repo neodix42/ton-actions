@@ -1,4 +1,4 @@
-name: Build all (shared,master)
+name: Test
 
 on:
   schedule:

@@ -1,4 +1,4 @@
-name: Build all (native,testnet)
+name: Build all (shared,testnet)
 
 on:
   workflow_dispatch:
@@ -7,6 +7,13 @@ on:
         description: 'TON branch name'
         required: true
         default: 'testnet'
+  workflow_call:
+    inputs:
+      branch:
+        description: 'TON branch name'
+        required: true
+        default: 'testnet'
+        type: string
 
 concurrency:
   group: ${{ github.workflow }}
