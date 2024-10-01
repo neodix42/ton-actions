@@ -1,4 +1,4 @@
-name: Mac-12-x86-64 (shared)
+name: Mac-14-arm64 (native)
 
 on:
   workflow_dispatch:
@@ -17,7 +17,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-12
+    runs-on: macos-14
 
     steps:
     - name: Check out repository
@@ -31,12 +31,12 @@ jobs:
     - name: Build TON
       run: |
         cd ton
-        cp assembly/native/build-macos-shared.sh .
-        chmod +x build-macos-shared.sh
-        ./build-macos-shared.sh -t -a
+        cp assembly/native/build-macos-portable.sh .
+        chmod +x build-macos-portable.sh
+        ./build-macos-portable.sh -t -a
 
     - name: Upload artifacts
       uses: actions/upload-artifact@master
       with:
-        name: ton-shared-mac-x86-64-${{ inputs.branch }}
+        name: ton-native-mac-arm64-${{ inputs.branch }}
         path: ton/artifacts

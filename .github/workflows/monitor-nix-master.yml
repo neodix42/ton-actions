@@ -32,3 +32,9 @@ jobs:
     uses: ./.github/workflows/build-all-nix-master.yml
     with:
       branch: master
+
+  release-nix-master:
+    needs: [ton-all-nix-master]
+    uses: ./.github/workflows/release-all-nix-master.yml
+    with:
+      branch: master

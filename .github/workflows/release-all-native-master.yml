@@ -1,4 +1,4 @@
-name: Release all (shared, master)
+name: Release all (native, master)
 
 on:
   workflow_dispatch:
@@ -34,7 +34,7 @@ jobs:
       - name: Download all artifacts
         uses: dawidd6/action-download-artifact@v3
         with:
-          workflow: build-all-shared-master.yml
+          workflow: build-all-native-master.yml
           path: artifacts
           workflow_conclusion: success
           skip_unpack: true
@@ -93,7 +93,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: artifacts/ton-linux-x86-64-${{ inputs.branch }}.zip
-          asset_name: ton-shared-linux-x86-64-${{ inputs.branch }}.zip
+          asset_name: ton-native-linux-x86-64-${{ inputs.branch }}.zip
           tag: ${{ steps.tag.outputs.TAG }}
 
       - name: Upload Linux arm64 artifacts
@@ -101,7 +101,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: artifacts/ton-linux-arm64-${{ inputs.branch }}.zip
-          asset_name: ton-shared-linux-arm64-${{ inputs.branch }}.zip
+          asset_name: ton-native-linux-arm64-${{ inputs.branch }}.zip
           tag: ${{ steps.tag.outputs.TAG }}
 
       - name: Upload MacOS x86-64 artifacts
@@ -109,7 +109,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: artifacts/ton-mac-x86-64-${{ inputs.branch }}.zip
-          asset_name: ton-shared-mac-x86-64-${{ inputs.branch }}.zip
+          asset_name: ton-native-mac-x86-64-${{ inputs.branch }}.zip
           tag: ${{ steps.tag.outputs.TAG }}
 
       - name: Upload MacOS arm64 artifacts
@@ -117,7 +117,7 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: artifacts/ton-mac-arm64-${{ inputs.branch }}.zip
-          asset_name: ton-shared-mac-arm64-${{ inputs.branch }}.zip
+          asset_name: ton-native-mac-arm64-${{ inputs.branch }}.zip
           tag: ${{ steps.tag.outputs.TAG }}
 
       - name: Upload Windows x86-64 artifacts

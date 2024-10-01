@@ -1,4 +1,4 @@
-name: Monitor (shared,master)
+name: Monitor (native,master)
 
 on:
   schedule:
@@ -23,12 +23,12 @@ jobs:
           echo $RESULT
           echo "res=$RESULT" >> $GITHUB_OUTPUT
 
-  ton-all-shared-master:
+  ton-all-native-master:
     if: needs.build.outputs.res == 0
     needs: [build]
     concurrency:
       group: ${{ github.workflow }}
       cancel-in-progress: true
-    uses: ./.github/workflows/build-all-shared-master.yml
+    uses: ./.github/workflows/build-all-native-master.yml
     with:
       branch: master
