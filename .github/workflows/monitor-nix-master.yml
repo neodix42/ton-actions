@@ -32,3 +32,11 @@ jobs:
     uses: ./.github/workflows/build-all-nix-master.yml
     with:
       branch: master
+
+  skip-me:
+    if: always() && (needs.build.result == 'failure')
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        run: echo skip it

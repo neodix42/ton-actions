@@ -25,7 +25,7 @@ jobs:
 
     - run: |
         sudo apt update
-        sudo apt install -y apt-utils build-essential git cmake ninja-build
+        sudo apt install -y apt-utils build-essential git cmake ninja-build libjemalloc-dev
 
     - name: Install Clang 16
       run: |
