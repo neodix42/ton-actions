@@ -1,4 +1,4 @@
-name: U-22.04-arm64 (shared)
+name: Mac-12-x86-64 (shared)
 
 on:
   workflow_dispatch:
@@ -17,31 +17,28 @@ on:
 
 jobs:
   build:
-    runs-on: [self-hosted, ubuntu-22.04-arm64]
-    env:
-      WORK_DIR: ${{ github.run_id }}-${{ github.run_attempt }}
+    runs-on: ubuntu-22.04
 
     steps:
+    - run: |
+        sudo apt update
+        sudo apt install -y apt-utils 
+
     - name: Check out repository
       uses: actions/checkout@v4
-      with:
-        path: ./${{ env.WORK_DIR }}
 
     - name: Install Clang 16
-      working-directory: ${{ env.WORK_DIR }}
       run: |
         wget https://apt.llvm.org/llvm.sh
         chmod +x llvm.sh
         sudo ./llvm.sh 16 all
 
     - name: Clone TON
-      working-directory: ${{ env.WORK_DIR }}
       run: |
         git clone --recursive https://github.com/ton-blockchain/ton.git ton
         cd ton; git checkout ${{ inputs.branch }}; git pull
 
     - name: Build TON
-      working-directory: ${{ env.WORK_DIR }}
       run: |
         cd ton
         cp assembly/native/build-ubuntu-shared.sh .
@@ -51,5 +48,5 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@master
       with:
-        name: ton-shared-22.04-arm64-${{ inputs.branch }}
+        name: ton-shared-22.04-x86-64-${{ inputs.branch }}
         path: ${{ env.WORK_DIR }}/ton/artifacts

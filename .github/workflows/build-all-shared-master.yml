@@ -1,4 +1,4 @@
-name: Build all (nix,testnet)
+name: Build all (shared,master,release)
 
 on:
   workflow_dispatch:
@@ -6,11 +6,7 @@ on:
       branch:
         description: 'TON branch name'
         required: true
-        default: 'testnet'
-
-concurrency:
-  group: ${{ github.workflow }}
-  cancel-in-progress: true
+        default: 'master'
 
 permissions: write-all
 
@@ -22,30 +18,30 @@ jobs:
       - name: Check out current repository
         uses: actions/checkout@v4
 
-  ton-linux-arm64-nix:
+  ton-linux-arm64-shared:
     needs: [build]
-    uses: ./.github/workflows/ton-linux-arm64-nix.yml
+    uses: ./.github/workflows/ton-linux-arm64-shared.yml
     secrets: inherit
     with:
       branch: ${{ inputs.branch }}
 
-  ton-linux-x86-64-nix:
+  ton-linux-x86-64-shared:
     needs: [build]
-    uses: ./.github/workflows/ton-linux-x86-64-nix.yml
+    uses: ./.github/workflows/ton-linux-x86-64-shared.yml
     secrets: inherit
     with:
       branch: ${{ inputs.branch }}
 
-  ton-macos-arm64-nix:
+  ton-macos-arm64-shared:
     needs: [build]
-    uses: ./.github/workflows/ton-macos-arm64-nix.yml
+    uses: ./.github/workflows/ton-macos-arm64-shared.yml
     secrets: inherit
     with:
       branch: ${{ inputs.branch }}
 
-  ton-macos-x86-64-nix:
+  ton-macos-x86-64-shared:
     needs: [build]
-    uses: ./.github/workflows/ton-macos-x86-64-nix.yml
+    uses: ./.github/workflows/ton-macos-x86-64-shared.yml
     secrets: inherit
     with:
       branch: ${{ inputs.branch }}
