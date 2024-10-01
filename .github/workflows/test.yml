@@ -23,7 +23,7 @@ jobs:
         id: check
         run: |
           sleep 30
-          RES = $(curl -s https://api.github.com/repos/ton-blockchain/ton/commits/master | jq -r "((now - (.commit.author.date | fromdateiso8601) )  / (60*15) | trunc)")
+          RES=$(curl -s https://api.github.com/repos/ton-blockchain/ton/commits/master | jq -r "((now - (.commit.author.date | fromdateiso8601) )  / (60*15) | trunc)")
           echo $RES
           echo "RES=$RES" >> $GITHUB_OUTPUT
 
