@@ -17,7 +17,6 @@ jobs:
         uses: actions/checkout@v4
 
       - name: If triggered manually we are ok
-        id: res
         run: |
           echo "res=0" >> $GITHUB_OUTPUT
 
