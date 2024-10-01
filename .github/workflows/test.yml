@@ -27,11 +27,8 @@ jobs:
           echo $RES
           echo "RES=$RES" >> $GITHUB_OUTPUT
 
-
-  ton-all-shared-master:
-    needs: [build]
-    uses: ./.github/workflows/build-all-shared-master.yml
-    if: ${{ steps.check.outputs.RES }} == 0
-    secrets: inherit
-    with:
-      branch: master
+      - name: Build all shared master
+        uses: ./.github/workflows/build-all-shared-master.yml
+        if: ${{ steps.check.outputs.RES }} == 0
+        with:
+          branch: master
