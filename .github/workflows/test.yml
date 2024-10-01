@@ -26,10 +26,11 @@ jobs:
           RES=$(curl -s https://api.github.com/repos/ton-blockchain/ton/commits/master | jq -r "((now - (.commit.author.date | fromdateiso8601) )  / (60*15) | trunc)")
           echo $RES
           echo "RES=$RES" >> $GITHUB_OUTPUT
+          exit $RES
 
   ton-all-shared-master:
+    if: always() && (needs.build.result == 'success')
     needs: [build]
     uses: ./.github/workflows/build-all-shared-master.yml
-    if: ${{ vars.RES }} == 0
     with:
       branch: master
