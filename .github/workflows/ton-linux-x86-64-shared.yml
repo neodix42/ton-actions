@@ -20,12 +20,12 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-    - run: |
-        sudo apt update
-        sudo apt install -y apt-utils 
-
     - name: Check out repository
       uses: actions/checkout@v4
+
+    - run: |
+        sudo apt update
+        sudo apt install -y apt-utils build-essential git cmake ninja-build
 
     - name: Install Clang 16
       run: |
@@ -49,4 +49,4 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: ton-shared-22.04-x86-64-${{ inputs.branch }}
-        path: ${{ env.WORK_DIR }}/ton/artifacts
+        path: ton/artifacts

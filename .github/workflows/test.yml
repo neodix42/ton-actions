@@ -1,8 +1,8 @@
-name: Test
+name: Monitor (shared,master)
 
 on:
   schedule:
-    - cron: "*/10 * * * *"
+    - cron: "*/15 * * * *"
   workflow_dispatch:
 
 permissions: write-all
@@ -16,11 +16,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Check if there was an update
-        id: check
         run: |
-          RES=$(curl -s https://api.github.com/repos/ton-blockchain/ton/commits/master | jq -r "((now - (.commit.author.date | fromdateiso8601) )  / (60*60*48) | trunc)")
-          echo $RES          
-          exit $RES
+          RESULT=$(curl -s https://api.github.com/repos/ton-blockchain/ton/commits/master | jq -r "((now - (.commit.author.date | fromdateiso8601) )  / (60*15) | trunc)")
+          echo $RESULT          
+          exit $RESULT
 
   ton-all-shared-master:
     if: always() && (needs.build.result == 'success')
