@@ -43,7 +43,7 @@ jobs:
         cd ton
         cp assembly/native/build-ubuntu-portable.sh .
         chmod +x build-ubuntu-portable.sh
-        ./build-ubuntu-portable.sh -t -a
+        ./build-ubuntu-portable.sh -a
 
     - name: Upload artifacts
       uses: actions/upload-artifact@master

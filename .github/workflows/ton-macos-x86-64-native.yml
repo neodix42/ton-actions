@@ -33,7 +33,7 @@ jobs:
         cd ton
         cp assembly/native/build-macos-portable.sh .
         chmod +x build-macos-portable.sh
-        ./build-macos-portable.sh -t -a
+        ./build-macos-portable.sh -a
 
     - name: Upload artifacts
       uses: actions/upload-artifact@master

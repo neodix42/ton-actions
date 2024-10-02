@@ -1,0 +1,45 @@
+name: Monitor (nix,testnet)
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch:
+
+permissions: write-all
+
+jobs:
+  build:
+    runs-on: ubuntu-22.04
+    outputs:
+      res: ${{ steps.res.outputs.res }}
+    steps:
+      - name: Check out current repository
+        uses: actions/checkout@v4
+
+      - name: If triggered manually we are ok
+        run: |
+          echo "res=0" >> $GITHUB_OUTPUT
+
+      - name: Check if there was an update
+        id: res
+        if: ${{ github.event_name == 'schedule' }}
+        run: |
+          RESULT=$(curl -s https://api.github.com/repos/ton-blockchain/ton/commits/testnet | jq -r "((now - (.commit.author.date | fromdateiso8601) )  / (60*30) | trunc)")
+          echo $RESULT
+          echo "res=$RESULT" >> $GITHUB_OUTPUT
+
+  ton-all-nix-testnet:
+    if: needs.build.outputs.res == 0
+    needs: [build]
+    concurrency:
+      group: ${{ github.workflow }}
+      cancel-in-progress: true
+    uses: ./.github/workflows/build-all-nix-testnet.yml
+    with:
+      branch: master
+
+  add-testnet-to-release:
+    needs: [ton-all-nix-testnet]
+    uses: ./.github/workflows/add-testnet-to-release-nix.yml
+    with:
+      branch: testnet

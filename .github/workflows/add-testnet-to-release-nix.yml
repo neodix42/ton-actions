@@ -36,8 +36,6 @@ jobs:
       - name: Get next tag
         id: tag
         run: |
-          git fetch --all --tags
-          git tag -l
           TAG=v$(date +'%Y.%m')          
           echo "TAG=$TAG" >> $GITHUB_OUTPUT
 

@@ -43,37 +43,27 @@ jobs:
       - name: Get next tag
         id: tag
         run: |
-          ls -lart
-          echo ---------------------
-          ls -lart artifacts
-          git fetch --all --tags
-          git tag -l
           NEW_TAG=v$(date +'%Y.%m')
-          FOUND=$(git tag -l | grep $NEW_TAG | wc -l)
-          if [ $FOUND -eq 0 ]; then
-            echo "TAG=$NEW_TAG" >> $GITHUB_OUTPUT
-          else
-            echo "TAG=$NEW_TAG-$FOUND" >> $GITHUB_OUTPUT
-          fi
+          echo "TAG=$NEW_TAG" >> $GITHUB_OUTPUT
 
       - name: Get registration token
         id: getRegToken
         run: |
           curl -X POST -H \"Accept: application/vnd.github+json\"  -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/ton-blockchain/ton/actions/runners/registration-token
 
-#      - uses: sgpublic/delete-release-action@v1.1
-#        with:
-#          # repo: '<owner>/<repoName>' # you can input a another repo here, defaults to current repo
-#          release-drop: true
-#          release-keep-count: -1
-#          release-drop-tag: true
-#          pre-release-drop: true
-#          pre-release-keep-count: -1
-#          pre-release-drop-tag: true
-#          draft-drop: true
-#          draft-drop-count: -1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: sgpublic/delete-release-action@v1.1
+        with:
+          # repo: '<owner>/<repoName>' # you can input a another repo here, defaults to current repo
+          release-drop: true
+          release-keep-count: 5
+          release-drop-tag: true
+          pre-release-drop: true
+          pre-release-keep-count: -1
+          pre-release-drop-tag: true
+          draft-drop: true
+          draft-drop-count: -1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Create release
         id: create_release
