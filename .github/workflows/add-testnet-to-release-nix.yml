@@ -51,6 +51,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: artifacts/ton-linux-x86-64-${{ inputs.branch }}.zip
           asset_name: ton-linux-x86-64-${{ inputs.branch }}.zip
+          overwrite: true
           tag: ${{ steps.tag.outputs.TAG }}
 
       - name: Upload Linux arm64 artifacts
@@ -59,6 +60,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: artifacts/ton-linux-arm64-${{ inputs.branch }}.zip
           asset_name: ton-linux-arm64-${{ inputs.branch }}.zip
+          overwrite: true
           tag: ${{ steps.tag.outputs.TAG }}
 
       - name: Upload MacOS x86-64 artifacts
@@ -67,6 +69,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: artifacts/ton-mac-x86-64-${{ inputs.branch }}.zip
           asset_name: ton-mac-x86-64-${{ inputs.branch }}.zip
+          overwrite: true
           tag: ${{ steps.tag.outputs.TAG }}
 
       - name: Upload MacOS arm64 artifacts
@@ -75,6 +78,7 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: artifacts/ton-mac-arm64-${{ inputs.branch }}.zip
           asset_name: ton-mac-arm64-${{ inputs.branch }}.zip
+          overwrite: true
           tag: ${{ steps.tag.outputs.TAG }}
 
       - name: Upload Windows x86-64 artifacts
@@ -83,4 +87,5 @@ jobs:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: artifacts/ton-win-x86-64-${{ inputs.branch }}.zip
           asset_name: ton-win-x86-64-${{ inputs.branch }}.zip
+          overwrite: true
           tag: ${{ steps.tag.outputs.TAG }}
