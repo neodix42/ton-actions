@@ -39,11 +39,13 @@ jobs:
         sudo ./llvm.sh 16 all
 
     - name: Clone TON
+      working-directory: ${{ env.WORK_DIR }}
       run: |
         git clone --recursive https://github.com/ton-blockchain/ton.git ton
         cd ton; git checkout ${{ inputs.branch }}; git pull
 
     - name: Build TON
+      working-directory: ${{ env.WORK_DIR }}
       run: |
         cd ton
         cp assembly/native/build-ubuntu-portable.sh .
@@ -54,4 +56,4 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: ton-native-22.04-arm64-${{ inputs.branch }}
-        path: ton/artifacts
+        path: ${{ env.WORK_DIR }}/ton/artifacts

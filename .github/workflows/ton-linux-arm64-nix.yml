@@ -33,11 +33,13 @@ jobs:
           access-tokens = github.com=${{ secrets.GITHUB_TOKEN }}
 
     - name: Clone TON
+      working-directory: ${{ env.WORK_DIR }}
       run: |
         git clone --recursive https://github.com/ton-blockchain/ton.git ton
         cd ton; git checkout ${{ inputs.branch }}; git pull
 
     - name: Build TON
+      working-directory: ${{ env.WORK_DIR }}
       run: |
         cd ton
         cp assembly/nix/build-linux-arm64-nix.sh .
@@ -48,4 +50,4 @@ jobs:
       uses: actions/upload-artifact@master
       with:
         name: ton-linux-arm64-${{ inputs.branch }}
-        path: ton/artifacts
+        path: ${{ env.WORK_DIR }}/ton/artifacts

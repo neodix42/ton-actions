@@ -36,6 +36,8 @@ jobs:
       - name: Get next tag
         id: tag
         run: |
+          ls -larthR .
+
           git fetch --all --tags
           git tag -l
           TAG=v$(date +'%Y.%m')          
@@ -51,7 +53,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ton/artifacts/ton-native-22.04-x86-64-${{ inputs.branch }}.zip
+          file: ton-native-22.04-x86-64-${{ inputs.branch }}.zip
           asset_name: ton-native-linux-x86-64-${{ inputs.branch }}.zip
           overwrite: true
           tag: ${{ steps.tag.outputs.TAG }}
