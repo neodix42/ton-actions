@@ -1,4 +1,4 @@
-name: Monitor (native,master)
+name: Monitor (native,testnet)
 
 on:
   schedule:
@@ -24,22 +24,22 @@ jobs:
         id: res
         if: ${{ github.event_name == 'schedule' }}
         run: |
-          RESULT=$(curl -s https://api.github.com/repos/ton-blockchain/ton/commits/master | jq -r "((now - (.commit.author.date | fromdateiso8601) )  / (60*30) | trunc)")
+          RESULT=$(curl -s https://api.github.com/repos/ton-blockchain/ton/commits/testnet | jq -r "((now - (.commit.author.date | fromdateiso8601) )  / (60*30) | trunc)")
           echo $RESULT
           echo "res=$RESULT" >> $GITHUB_OUTPUT
 
-  ton-all-native-master:
+  ton-all-native-testnet:
     if: needs.build.outputs.res == 0
     needs: [build]
     concurrency:
       group: ${{ github.workflow }}
       cancel-in-progress: true
-    uses: ./.github/workflows/build-all-native-master.yml
+    uses: ./.github/workflows/build-all-native-testnet.yml
     with:
-      branch: master
+      branch: testnet
 
-  add-master-to-release:
-    needs: [ton-all-native-master]
-    uses: ./.github/workflows/add-master-to-release-native.yml
+  add-testnet-to-release:
+    needs: [ton-all-native-testnet]
+    uses: ./.github/workflows/add-testnet-to-release-native.yml
     with:
-      branch: master
+      branch: testnet
