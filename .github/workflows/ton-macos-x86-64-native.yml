@@ -23,6 +23,10 @@ jobs:
     - name: Check out repository
       uses: actions/checkout@v4
 
+    - name: brew install
+      run: |
+        brew install texinfo
+
     - name: Clone TON
       run: |
         git clone --recursive https://github.com/ton-blockchain/ton.git ton
