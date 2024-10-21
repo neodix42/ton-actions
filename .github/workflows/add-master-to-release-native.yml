@@ -51,7 +51,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/ton-native-linux-x86-64-${{ inputs.branch }}.zip
+          file: artifacts/ton-native-22.04-x86-64-${{ inputs.branch }}.zip
           asset_name: ton-native-linux-x86-64-${{ inputs.branch }}.zip
           overwrite: true
           tag: ${{ steps.tag.outputs.TAG }}
@@ -60,7 +60,7 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/ton-native-linux-arm64-${{ inputs.branch }}.zip
+          file: artifacts/ton-native-22.04-arm64-${{ inputs.branch }}.zip
           asset_name: ton-native-linux-arm64-${{ inputs.branch }}.zip
           overwrite: true
           tag: ${{ steps.tag.outputs.TAG }}
