@@ -28,7 +28,7 @@ jobs:
       - name: Download all artifacts
         uses: dawidd6/action-download-artifact@v3
         with:
-          workflow: build-all-native-testnet.yml
+          workflow: build-all-native-master.yml
           path: artifacts
           workflow_conclusion: success
           skip_unpack: true
