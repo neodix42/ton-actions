@@ -39,7 +39,7 @@ jobs:
         cd ton
         cp assembly/nix/build-macos-nix.sh .
         chmod +x build-macos-nix.sh
-        ./build-macos-nix.sh -t
+        ./build-macos-nix.sh
 
     - name: Simple binaries test
       run: |
