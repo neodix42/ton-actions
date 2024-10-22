@@ -48,7 +48,7 @@ jobs:
       working-directory: ${{ env.WORK_DIR }}
       run: |
         cd ton
-        cp assembly/native/build-ubuntu-portable.sh .
+        cp ../tmp/build-ubuntu-portable.sh .
         chmod +x build-ubuntu-portable.sh
         ./build-ubuntu-portable.sh -a
 

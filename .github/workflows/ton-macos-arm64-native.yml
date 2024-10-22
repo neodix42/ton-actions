@@ -35,7 +35,7 @@ jobs:
     - name: Build TON
       run: |
         cd ton
-        cp assembly/native/build-macos-portable.sh .
+        cp ../tmp/build-macos-portable.sh .
         chmod +x build-macos-portable.sh
         ./build-macos-portable.sh -a
 
