@@ -36,7 +36,7 @@ jobs:
       cancel-in-progress: true
     uses: ./.github/workflows/build-all-nix-testnet.yml
     with:
-      branch: master
+      branch: testnet
 
   add-testnet-to-release:
     needs: [ton-all-nix-testnet]
