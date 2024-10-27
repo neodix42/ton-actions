@@ -29,7 +29,7 @@ jobs:
 
     - name: Install Clang 16
       run: |
-        wget https://apt.llvm.org/llvm.sh
+        wget https://apt.llvm.org/llvm.sh 
         chmod +x llvm.sh
         sudo ./llvm.sh 16 all
 
@@ -37,6 +37,8 @@ jobs:
       run: |
         git clone --recursive https://github.com/ton-blockchain/ton.git ton
         cd ton; git checkout ${{ inputs.branch }}; git pull
+        git apply ../tmp/patch.txt
+        
 
     - name: Build TON
       run: |
