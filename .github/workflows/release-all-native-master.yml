@@ -59,21 +59,7 @@ jobs:
       - name: Get registration token
         id: getRegToken
         run: |
-          curl -X POST -H \"Accept: application/vnd.github+json\"  -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/ton-blockchain/ton/actions/runners/registration-token
-
-#      - uses: sgpublic/delete-release-action@v1.1
-#        with:
-#          # repo: '<owner>/<repoName>' # you can input a another repo here, defaults to current repo
-#          release-drop: true
-#          release-keep-count: -1
-#          release-drop-tag: true
-#          pre-release-drop: true
-#          pre-release-keep-count: -1
-#          pre-release-drop-tag: true
-#          draft-drop: true
-#          draft-drop-count: -1
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          curl -X POST -H \"Accept: application/vnd.github+json\"  -H 'Authorization: token ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/neodix42/ton-actions/actions/runners/registration-token
 
       - name: Create release
         id: create_release
