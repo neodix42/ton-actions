@@ -36,7 +36,7 @@ jobs:
     - name: Clone TON
       run: |
         git clone --recursive https://github.com/ton-blockchain/ton.git ton
-        cd ton; git checkout ${{ inputs.branch }}; git pull
+        cd ton; git checkout ${{ inputs.branch }}; git submodule sync --recursive; git submodule update
 
     - name: Build TON
       run: |
