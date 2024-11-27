@@ -28,9 +28,9 @@ jobs:
       - name: Download all artifacts
         uses: dawidd6/action-download-artifact@v3
         with:
-          workflow: build-all-nix-testnet.yml
+          workflow: monitor-nix-testnet.yml
           path: artifacts
-          workflow_conclusion: success
+          workflow_conclusion: in_progress
           skip_unpack: true
 
       - name: Get next tag

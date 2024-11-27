@@ -34,9 +34,9 @@ jobs:
       - name: Download all artifacts
         uses: dawidd6/action-download-artifact@v3
         with:
-          workflow: build-all-nix-master.yml
+          workflow: monitor-nix-master.yml
           path: artifacts
-          workflow_conclusion: success
+          workflow_conclusion: in_progress
           skip_unpack: true
 
       # create release
