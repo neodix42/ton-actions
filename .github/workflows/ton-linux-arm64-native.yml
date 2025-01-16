@@ -44,16 +44,25 @@ jobs:
         git clone --recursive https://github.com/ton-blockchain/ton.git ton
         cd ton; git checkout ${{ inputs.branch }}; git submodule sync --recursive; git submodule update
 
-    - name: Build TON
-      working-directory: ${{ env.WORK_DIR }}
+    - name: Make AppImages
       run: |
-        cd ton
-        cp assembly/native//build-ubuntu-portable.sh .
-        chmod +x build-ubuntu-portable.sh
-        ./build-ubuntu-portable.sh -a
+        cp assembly/appimage/create-appimages.sh .
+        cp assembly/appimage/AppRun .
+        cp assembly/appimage/ton.png .
+        chmod +x create-appimages.sh
+        ./create-appimages.sh
+        rm -rf artifacts
+
+    - name: Build TON libs
+      run: |
+        cp assembly/native/build-ubuntu-portable-libs.sh .
+        chmod +x build-ubuntu-portable-libs.sh
+        ./build-ubuntu-portable-libs.sh -a
+        cp ./artifacts/libtonlibjson.so appimages/artifacts/
+        cp ./artifacts/libemulator.so appimages/artifacts/
 
     - name: Upload artifacts
       uses: actions/upload-artifact@master
       with:
         name: ton-native-22.04-arm64-${{ inputs.branch }}
-        path: ${{ env.WORK_DIR }}/ton/artifacts
+        path: ${{ env.WORK_DIR }}/ton/appimages/artifacts

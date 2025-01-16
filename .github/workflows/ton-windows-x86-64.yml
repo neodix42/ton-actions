@@ -1,4 +1,4 @@
-name: Win-2019-x86-64 (nix)
+name: Win-2019-x86-64
 
 on:
   workflow_dispatch:
