@@ -17,7 +17,7 @@ on:
 
 jobs:
   build:
-    runs-on: [self-hosted, ubuntu-22.04-arm64]
+    runs-on: ubuntu-22.04-arm
     env:
       WORK_DIR: ${{ github.run_id }}-${{ github.run_attempt }}
 
