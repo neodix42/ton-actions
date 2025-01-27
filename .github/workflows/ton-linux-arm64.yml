@@ -44,8 +44,17 @@ jobs:
         git clone --recursive https://github.com/ton-blockchain/ton.git ton
         cd ton; git checkout ${{ inputs.branch }}; git submodule sync --recursive; git submodule update
 
+
+    - name: Build TON
+      run: |
+        cd ton
+        cp assembly/native/build-ubuntu-appimages.sh .
+        chmod +x build-ubuntu-appimages.sh
+        ./build-ubuntu-appimages.sh -a
+
     - name: Make AppImages
       run: |
+        cd ton
         cp assembly/appimage/create-appimages.sh .
         cp assembly/appimage/AppRun .
         cp assembly/appimage/ton.png .
@@ -55,6 +64,7 @@ jobs:
 
     - name: Build TON libs
       run: |
+        cd ton
         cp assembly/native/build-ubuntu-portable-libs.sh .
         chmod +x build-ubuntu-portable-libs.sh
         ./build-ubuntu-portable-libs.sh -a
