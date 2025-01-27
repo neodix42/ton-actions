@@ -1,4 +1,4 @@
-name: Monitor (native,master)
+name: Monitor (master)
 
 on:
   schedule:

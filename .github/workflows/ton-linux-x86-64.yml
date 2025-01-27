@@ -1,4 +1,4 @@
-name: U-22.04-x86-64 (native)
+name: U-22.04-x86-64
 
 on:
   workflow_dispatch:

@@ -1,4 +1,4 @@
-name: Build all (native,master,release)
+name: Build all (master,release)
 
 on:
   workflow_dispatch:

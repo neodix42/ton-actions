@@ -1,4 +1,4 @@
-name: Monitor (native,testnet)
+name: Monitor (testnet)
 
 on:
   schedule:

@@ -1,4 +1,4 @@
-name: Build all (native,testnet)
+name: Build all (testnet)
 
 on:
   workflow_dispatch:

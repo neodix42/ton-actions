@@ -1,4 +1,4 @@
-name: Mac-14-arm64 (native)
+name: Mac-14-arm64
 
 on:
   workflow_dispatch:

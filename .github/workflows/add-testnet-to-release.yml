@@ -1,4 +1,4 @@
-name: Add testnet to release (native)
+name: Add testnet to release
 
 on:
   workflow_dispatch:

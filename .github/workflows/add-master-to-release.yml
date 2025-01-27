@@ -1,4 +1,4 @@
-name: Add master to release (native)
+name: Add master to release
 
 on:
   workflow_dispatch:

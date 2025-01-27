@@ -1,4 +1,4 @@
-name: Mac-13-x86-64 (native)
+name: Mac-13-x86-64
 
 on:
   workflow_dispatch:
