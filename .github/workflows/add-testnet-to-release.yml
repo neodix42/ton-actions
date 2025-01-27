@@ -1,4 +1,4 @@
-name: Add master to release (native)
+name: Add testnet to release (native)
 
 on:
   workflow_dispatch:
@@ -6,13 +6,13 @@ on:
       branch:
         description: 'TON branch name'
         required: true
-        default: 'master'
+        default: 'testnet'
   workflow_call:
     inputs:
       branch:
         description: 'TON branch name'
         required: true
-        default: 'master'
+        default: 'testnet'
         type: string
 
 permissions: write-all
@@ -28,7 +28,7 @@ jobs:
       - name: Download all artifacts
         uses: dawidd6/action-download-artifact@v3
         with:
-          workflow: build-all-native-master.yml
+          workflow: build-all-testnet.yml
           path: artifacts
           workflow_conclusion: success
           skip_unpack: true
@@ -37,6 +37,7 @@ jobs:
         id: tag
         run: |
           ls -larthR .
+
           git fetch --all --tags
           git tag -l
           TAG=v$(date +'%Y.%m')          
@@ -52,8 +53,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/ton-native-22.04-x86-64-${{ inputs.branch }}.zip
-          asset_name: ton-native-linux-x86-64-${{ inputs.branch }}.zip
+          file: artifacts/ton-22.04-x86-64-${{ inputs.branch }}.zip
+          asset_name: ton-linux-x86-64-${{ inputs.branch }}.zip
           overwrite: true
           tag: ${{ steps.tag.outputs.TAG }}
 
@@ -61,8 +62,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/ton-native-22.04-arm64-${{ inputs.branch }}.zip
-          asset_name: ton-native-linux-arm64-${{ inputs.branch }}.zip
+          file: artifacts/ton-22.04-arm64-${{ inputs.branch }}.zip
+          asset_name: ton-linux-arm64-${{ inputs.branch }}.zip
           overwrite: true
           tag: ${{ steps.tag.outputs.TAG }}
 
@@ -70,8 +71,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/ton-native-mac-x86-64-${{ inputs.branch }}.zip
-          asset_name: ton-native-mac-x86-64-${{ inputs.branch }}.zip
+          file: artifacts/ton-mac-x86-64-${{ inputs.branch }}.zip
+          asset_name: ton-mac-x86-64-${{ inputs.branch }}.zip
           overwrite: true
           tag: ${{ steps.tag.outputs.TAG }}
 
@@ -79,8 +80,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: artifacts/ton-native-mac-arm64-${{ inputs.branch }}.zip
-          asset_name: ton-native-mac-arm64-${{ inputs.branch }}.zip
+          file: artifacts/ton-mac-arm64-${{ inputs.branch }}.zip
+          asset_name: ton-mac-arm64-${{ inputs.branch }}.zip
           overwrite: true
           tag: ${{ steps.tag.outputs.TAG }}
 
@@ -89,6 +90,6 @@ jobs:
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
           file: artifacts/ton-win-x86-64-${{ inputs.branch }}.zip
-          asset_name: ton-native-win-x86-64-${{ inputs.branch }}.zip
+          asset_name: ton-win-x86-64-${{ inputs.branch }}.zip
           overwrite: true
           tag: ${{ steps.tag.outputs.TAG }}

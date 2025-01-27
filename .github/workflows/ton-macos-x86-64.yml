@@ -1,4 +1,4 @@
-name: Mac-14-arm64 (native)
+name: Mac-13-x86-64 (native)
 
 on:
   workflow_dispatch:
@@ -17,7 +17,7 @@ on:
 
 jobs:
   build:
-    runs-on: macos-14
+    runs-on: macos-13
 
     steps:
     - name: Check out repository
@@ -42,5 +42,5 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@master
       with:
-        name: ton-native-mac-arm64-${{ inputs.branch }}
+        name: ton-mac-x86-64-${{ inputs.branch }}
         path: ton/artifacts

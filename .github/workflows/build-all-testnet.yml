@@ -29,30 +29,30 @@ jobs:
       - name: Check out current repository
         uses: actions/checkout@v4
 
-  ton-linux-arm64-native:
+  ton-linux-arm64:
     needs: [build]
-    uses: ./.github/workflows/ton-linux-arm64-native.yml
+    uses: ./.github/workflows/ton-linux-arm64.yml
     secrets: inherit
     with:
       branch: ${{ inputs.branch }}
 
-  ton-linux-x86-64-native:
+  ton-linux-x86-64:
     needs: [build]
-    uses: ./.github/workflows/ton-linux-x86-64-native.yml
+    uses: ./.github/workflows/ton-linux-x86-64.yml
     secrets: inherit
     with:
       branch: ${{ inputs.branch }}
 
-  ton-macos-arm64-native:
+  ton-macos-arm64:
     needs: [build]
-    uses: ./.github/workflows/ton-macos-arm64-native.yml
+    uses: ./.github/workflows/ton-macos-arm64.yml
     secrets: inherit
     with:
       branch: ${{ inputs.branch }}
 
-  ton-macos-x86-64-native:
+  ton-macos-x86-64:
     needs: [build]
-    uses: ./.github/workflows/ton-macos-x86-64-native.yml
+    uses: ./.github/workflows/ton-macos-x86-64.yml
     secrets: inherit
     with:
       branch: ${{ inputs.branch }}
