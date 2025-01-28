@@ -55,7 +55,7 @@ jobs:
         cp assembly/appimage/AppRun .
         cp assembly/appimage/ton.png .
         chmod +x create-appimages.sh
-        ./create-appimages.sh
+        ./create-appimages.sh aarch64
         rm -rf artifacts
 
     - name: Build TON libs
