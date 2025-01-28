@@ -30,7 +30,7 @@ jobs:
         with:
           workflow: monitor-master.yml
           path: artifacts
-          workflow_conclusion: success
+          workflow_conclusion: in_progress
           skip_unpack: true
 
       - name: Get next tag
